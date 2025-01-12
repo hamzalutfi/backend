@@ -5,13 +5,13 @@ exports.sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
+      user: "hamza.lutfi68@gmail.com",
+      pass: "vrla qqji nyya uwqr",
     },
   });
   // 2) Defiend the mail options
   const mailOptions = {
-    from: process.env.EMAIL_USERNAME,
+    from: "hamza.lutfi68@gmail.com",
     to: options.email,
     subject: options.subject,
     text: options.String,
@@ -27,13 +27,13 @@ exports.sendResetPasswordEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
+      user: "hamza.lutfi68@gmail.com",
+      pass: "vrla qqji nyya uwqr",
     },
   });
   // 2) Defiend the mail options
   const mailOptions = {
-    from: process.env.EMAIL_USERNAME,
+    from: "hamza.lutfi68@gmail.com",
     to: options.email,
     subject: "Reset Password",
     html: `
@@ -177,13 +177,13 @@ exports.sendActivationEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
+      user: "hamza.lutfi68@gmail.com",
+      pass: "vrla qqji nyya uwqr",
     },
   });
   // 2) Defiend the mail options
   const mailOptions = {
-    from: process.env.EMAIL_USERNAME,
+    from: "hamza.lutfi68@gmail.com",
     to: options.email,
     subject: "Activate doctorna account",
     html: `

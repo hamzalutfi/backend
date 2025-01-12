@@ -11,23 +11,28 @@ const Joi = require("joi");
 const signupSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  confirmPassword: Joi.string().valid(Joi.ref('password'),"confirm password must be exactly same as password").required(),
-  role: Joi.string().valid('donor', 'disabled', 'assistant').required(), // Example roles
-  
+  confirmPassword: Joi.string()
+    .valid(
+      Joi.ref("password"),
+      "confirm password must be exactly same as password"
+    )
+    .required(),
+  role: Joi.string().valid("donor", "disabled", "assistant").required(), // Example roles
 });
 exports.signup = async (req, res) => {
-  
   try {
     const { error } = signupSchema.validate(req.body);
     if (error) {
       return res.status(400).send({ error: error.details[0].message });
     }
-    const createdUser = await user.create({ email: req.body.email,
+    const createdUser = await user.create({
+      email: req.body.email,
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
-      role: req.body.role,});
-    console.log("req.body",req.body) //create user from the info in req.body
-    
+      role: req.body.role,
+    });
+    console.log("req.body", req.body); //create user from the info in req.body
+
     const userToken = await createdUser.createActivationToken(); //HERE we create the activation token
     console.log("userToken", userToken);
     await sendActivationEmail({
@@ -43,8 +48,8 @@ exports.signup = async (req, res) => {
 };
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().min(6).required(), 
-  status: Joi.string().valid("active", "inactive").optional(),// Adjust password length as needed
+  password: Joi.string().min(6).required(),
+  status: Joi.string().valid("active", "inactive").optional(), // Adjust password length as needed
 });
 exports.login = async (req, res) => {
   try {
@@ -75,7 +80,7 @@ exports.login = async (req, res) => {
       {
         id: currentUser._id,
       },
-      process.env.SECRET_KEY,
+      "dahlksjakjshdasdhjkl",
       {
         expiresIn: 3 * 24 * 60 * 60 * 1000,
       }
@@ -192,17 +197,22 @@ exports.resetPassword = async (req, res) => {
 // Validation schema for password change
 const changePasswordSchema = Joi.object({
   oldPassword: Joi.string().min(8).required().messages({
-    'string.min': 'Old password must be at least 8 characters long.',
-    'any.required': 'Old password is required.',
+    "string.min": "Old password must be at least 8 characters long.",
+    "any.required": "Old password is required.",
   }),
-  password: Joi.string().min(8).required().pattern(/(?=.*[a-zA-Z])(?=.*\d)/).messages({
-    'string.min': 'New password must be at least 8 characters long.',
-    'string.pattern.base': 'New password must contain at least one letter and one number.',
-    'any.required': 'New password is required.',
-  }),
-  confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
-    'any.only': 'Confirm password must match the new password.',
-    'any.required': 'Confirm password is required.',
+  password: Joi.string()
+    .min(8)
+    .required()
+    .pattern(/(?=.*[a-zA-Z])(?=.*\d)/)
+    .messages({
+      "string.min": "New password must be at least 8 characters long.",
+      "string.pattern.base":
+        "New password must contain at least one letter and one number.",
+      "any.required": "New password is required.",
+    }),
+  confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
+    "any.only": "Confirm password must match the new password.",
+    "any.required": "Confirm password is required.",
   }),
 });
 exports.changePassword = async (req, res) => {
@@ -268,7 +278,7 @@ exports.deleteCurrentUser = async (req, res) => {
 };
 const updateUserSchema = Joi.object({
   status: Joi.string().valid("active", "inactive").optional(),
-  
+
   donor: Joi.object({
     name: Joi.string(),
     birthDate: Joi.date(),
@@ -325,11 +335,9 @@ const updateUserSchema = Joi.object({
   passwordChangeAt: Joi.date(),
   passwordResetToken: Joi.string(),
   passwordResetExpire: Joi.date(),
-
 }).messages({
-  'object.base': 'Invalid input format.',
+  "object.base": "Invalid input format.",
 });
-
 
 exports.updateCurrentUser = async (req, res) => {
   try {
