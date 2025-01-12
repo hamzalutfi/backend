@@ -19,6 +19,9 @@ exports.getDonorCases = async (req, res) => {
   try {
     const { _id } = req.user;
     const cases = await need.find({ userDoner: _id }).populate("userDisabled");
+    if (!cases) {
+      return res.status(500).send("no cases found");
+    }
     res.status(200).json(cases);
   } catch (error) {
     res.status(500).json({ error: error.message });
