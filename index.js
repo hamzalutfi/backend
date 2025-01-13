@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const app = require("./app");
-
+console.log("hi")
 mongoose
   .connect("mongodb+srv://hamza:ha123123@cluster0.cwa7x.mongodb.net/hope?retryWrites=true&w=majority")
   .then(() => {
